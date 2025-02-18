@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heaven's Kitchen - Customer Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffefcc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            color: #8b4513;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #d2691e;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #8b4513;
+        }
+        .language-toggle {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .language-toggle button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .language-toggle button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-toggle">
+            <button onclick="toggleLanguage('en')">English</button> | 
+            <button onclick="toggleLanguage('bn')">বাংলা</button>
+        </div>
+        <h2 id="form-title">Customer Feedback Form</h2>
+        <form id="feedbackForm">
+            <label for="name" id="label-name">Your Name (Required)</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="contact" id="label-contact">Phone Number (Required)</label>
+            <input type="text" id="contact" name="contact" required>
+            
+            <label for="email" id="label-email">Email Address (Optional)</label>
+            <input type="email" id="email" name="email">
+            
+            <label for="rating" id="label-rating">How would you rate your overall dining experience today?</label>
+            <select id="rating" name="rating" required>
+                <option value="">Select Rating</option>
+                <option value="5">Excellent</option>
+                <option value="4">Good</option>
+                <option value="3">Average</option>
+                <option value="2">Poor</option>
+                <option value="1">Very Poor</option>
+            </select>
+            
+            <label for="food-quality" id="label-food-quality">How would you rate the quality of the food?</label>
+            <select id="food-quality" name="food-quality" required>
+                <option value="">Select Rating</option>
+                <option value="5">Excellent</option>
+                <option value="4">Good</option>
+                <option value="3">Average</option>
+                <option value="2">Poor</option>
+                <option value="1">Very Poor</option>
+            </select>
+            
+            <label for="meal-satisfaction" id="label-meal-satisfaction">Was your meal prepared to your satisfaction?</label>
+            <select id="meal-satisfaction" name="meal-satisfaction" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            
+            <label for="served-on-time" id="label-served-on-time">Was the food served on time?</label>
+            <select id="served-on-time" name="served-on-time" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            
+            <label for="portion" id="label-portion">Were the portion sizes and pricing reasonable?</label>
+            <select id="portion" name="portion" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            
+            <label for="comments" id="label-comments">Do you have any comments about pricing or portion sizes or any additional for improvements?</label>
+            <textarea id="comments" name="comments"></textarea>
+            
+            <button type="submit" id="submit-button">Submit Feedback</button>
+        </form>
+    </div>
+	<script>
+document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = {
+        name: document.getElementById("name").value,
+        contact: document.getElementById("contact").value,
+        email: document.getElementById("email").value,
+        rating: document.getElementById("rating").value,
+        "food-quality": document.getElementById("food-quality").value,
+        "meal-satisfaction": document.getElementById("meal-satisfaction").value,
+        "served-on-time": document.getElementById("served-on-time").value,
+        portion: document.getElementById("portion").value,
+        comments: document.getElementById("comments").value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwx8eX9XGsevLu4kVhNmxfTX7f04ttsUsrl_wAX-jdedXgeD08LMebfZL-uOtG66HKBXQ/exec", { // Replace with latest Web App URL
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    mode: "no-cors",
+    body: JSON.stringify(formData)
+})
+
+    .then(response => {
+        console.log("Raw Response:", response);
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(text => {
+        console.log("Response Text:", text);
+        try {
+            const data = JSON.parse(text);
+            if (data.result === "Success") {
+                alert("Feedback submitted successfully!");
+                document.getElementById("feedbackForm").reset();
+            } else {
+                alert("Submission failed! Check your Google Sheets integration.");
+            }
+        } catch (error) {
+            alert("Unexpected response format. Check console.");
+            console.error("JSON Parse Error:", error);
+        }
+    })
+    .catch(error => {
+        console.error("Submission error:", error);
+        alert("Error submitting feedback. Check console for details.");
+    });
+});
+
+</script>
+
+    <script>
+        function toggleLanguage(lang) {
+            const translations = {
+                en: {
+                    "form-title": "Customer Feedback Form",
+                    "label-name": "Your Name (Required)",
+                    "label-contact": "Phone Number (Required)",
+                    "label-email": "Email Address (Optional)",
+                    "label-rating": "How would you rate your overall dining experience today?",
+                    "label-food-quality": "How would you rate the quality of the food?",
+                    "label-meal-satisfaction": "Was your meal prepared to your satisfaction?",
+                    "label-served-on-time": "Was the food served on time?",
+                    "label-portion": "Were the portion sizes and pricing reasonable?",
+                    "label-comments": "Do you have any comments about pricing or portion sizes or any additional for improvements?",
+                    "submit-button": "Submit Feedback"
+                },
+                bn: {
+                    "form-title": "গ্রাহক প্রতিক্রিয়া ফর্ম",
+                    "label-name": "আপনার নাম (আবশ্যক)",
+                    "label-contact": "ফোন নম্বর (আবশ্যক)",
+                    "label-email": "ইমেইল ঠিকানা (ঐচ্ছিক)",
+                    "label-rating": "আপনি আজকের খাবারের অভিজ্ঞতা কেমন রেট করবেন?",
+                    "label-food-quality": "আপনি খাবারের মান কেমন রেট করবেন?",
+                    "label-meal-satisfaction": "আপনার খাবার কি আপনার প্রত্যাশা অনুযায়ী প্রস্তুত হয়েছিল?",
+                    "label-served-on-time": "খাবার সময়মতো পরিবেশন করা হয়েছিল কি?",
+                    "label-portion": "পরিমাণ এবং মূল্য নির্ধারণ যথাযথ ছিল কি?",
+                    "label-comments": "মূল্য নির্ধারণ বা পরিমাণ সম্পর্কে আপনার কোন মতামত বা উন্নতির জন্য অতিরিক্ত কিছু আছে কি?",
+                    "submit-button": "প্রতিক্রিয়া জমা দিন"
+                }
+            };
+            document.querySelectorAll("[id^='label-']").forEach(label => {
+                const key = label.id;
+                if (translations[lang][key]) {
+                    label.innerText = translations[lang][key];
+                }
+            });
+            document.getElementById('submit-button').innerText = translations[lang]['submit-button'];
+            document.getElementById('form-title').innerText = translations[lang]['form-title'];
+        }
+    </script>
+</body>
+</html>
