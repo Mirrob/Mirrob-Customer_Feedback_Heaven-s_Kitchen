@@ -115,14 +115,15 @@
                 comments: document.getElementById("comments").value
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbwx8eX9XGsevLu4kVhNmxfTX7f04ttsUsrl_wAX-jdedXgeD08LMebfZL-uOtG66HKBXQ/exec", {  // Replace with latest Web App URL
-                method: "POST",
-                mode: "no-cors",  // 🔥 Fix CORS issue
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
+            fetch("https://script.google.com/macros/s/AKfycbzvQi5f-8Q2vKDqW7Grai9tGDpwbZT3cJLyfsc9BR0tlRSUqDJWDZseZhOGBd-adbVMSQ/exec", {  // Replace with latest Web App URL
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+})
+
             .then(() => alert("Feedback submitted successfully!"))
             .catch(error => alert("Error: " + error));
         });
