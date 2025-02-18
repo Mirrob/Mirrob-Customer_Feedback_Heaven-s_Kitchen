@@ -47,16 +47,16 @@
     
     <form id="feedbackForm">
         <label for="name">Your Name (Required)</label>
-        <input type="text" id="name" required>
+        <input type="text" id="name" name="name" required>
 
         <label for="contact">Phone Number (Required)</label>
-        <input type="text" id="contact" required>
+        <input type="text" id="contact" name="contact" required>
 
         <label for="email">Email Address (Optional)</label>
-        <input type="email" id="email">
+        <input type="email" id="email" name="email">
 
         <label for="rating">How would you rate your overall dining experience today?</label>
-        <select id="rating" required>
+        <select id="rating" name="rating" required>
             <option value="">Select Rating</option>
             <option value="Excellent">Excellent</option>
             <option value="Good">Good</option>
@@ -66,7 +66,7 @@
         </select>
 
         <label for="foodQuality">How would you rate the quality of the food?</label>
-        <select id="foodQuality" required>
+        <select id="foodQuality" name="foodQuality" required>
             <option value="">Select Rating</option>
             <option value="Excellent">Excellent</option>
             <option value="Good">Good</option>
@@ -76,25 +76,25 @@
         </select>
 
         <label for="mealSatisfaction">Was your meal prepared to your satisfaction?</label>
-        <select id="mealSatisfaction" required>
+        <select id="mealSatisfaction" name="mealSatisfaction" required>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
         <label for="servedOnTime">Was the food served on time?</label>
-        <select id="servedOnTime" required>
+        <select id="servedOnTime" name="servedOnTime" required>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
         <label for="portion">Were the portion sizes and pricing reasonable?</label>
-        <select id="portion" required>
+        <select id="portion" name="portion" required>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
         <label for="comments">Any comments about pricing, portion sizes, or improvements?</label>
-        <textarea id="comments"></textarea>
+        <textarea id="comments" name="comments"></textarea>
 
         <button type="submit">Submit Feedback</button>
     </form>
@@ -115,15 +115,14 @@
                 comments: document.getElementById("comments").value
             };
 
-            fetch("https://script.google.com/macros/s/AKfycbzvQi5f-8Q2vKDqW7Grai9tGDpwbZT3cJLyfsc9BR0tlRSUqDJWDZseZhOGBd-adbVMSQ/exec", {  // Replace with latest Web App URL
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(formData)
-})
-
+            fetch("https://script.google.com/macros/s/AKfycbxhW4UJgxtEOIC_ALqpAnhWk5P6KakZ3cdrDcjKjThzQ6TI0KgM9FL_JemE_bMX_h_tcA/exec", {  // Replace with latest Web App URL
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
             .then(() => alert("Feedback submitted successfully!"))
             .catch(error => alert("Error: " + error));
         });
